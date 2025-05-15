@@ -1,43 +1,58 @@
-const form = document.getElementById('donation-form');
-const materialList = document.getElementById('material-list');
-const searchInput = document.getElementById('search');
-
-let materials = [];
-
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  const name = form.name.value.trim();
-  const material = form.material.value.trim();
-  const description = form.description.value.trim();
-  const location = form.location.value.trim();
-
-  const item = {
-    name,
-    material,
-    description,
-    location,
-  };
-
-  materials.push(item);
-  form.reset();
-  displayMaterials(materials);
-});
-
-searchInput.addEventListener('input', function () {
-  const searchTerm = this.value.toLowerCase();
-  const filtered = materials.filter(m =>
-    m.material.toLowerCase().includes(searchTerm)
-  );
-  displayMaterials(filtered);
-});
-
-function displayMaterials(items) {
-  materialList.innerHTML = '';
-  items.forEach(m => {
-    const li = document.createElement('li');
-    li.innerHTML = `<strong>${m.material}</strong> by ${m.name}<br>
-                    <em>${m.description}</em><br>
-                    Drop-off: ${m.location}`;
-    materialList.appendChild(li);
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("donation-form");
+    const materialList = document.getElementById("material-list");
+    const searchInput = document.getElementById("search");
+  
+    // Load stored materials on page load
+    loadMaterials();
+  
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const material = document.getElementById("material").value.trim();
+      const description = document.getElementById("description").value.trim();
+      const location = document.getElementById("location").value.trim();
+  
+      if (name && material && description && location) {
+        const entry = {
+          name,
+          material,
+          description,
+          location,
+          timestamp: new Date().toISOString()
+        };
+  
+        saveMaterial(entry);
+        appendMaterialToList(entry);
+        form.reset();
+      }
+    });
+  
+    searchInput.addEventListener("input", function () {
+      const searchTerm = searchInput.value.toLowerCase();
+      const items = materialList.querySelectorAll("li");
+  
+      items.forEach((item) => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(searchTerm) ? "block" : "none";
+      });
+    });
+  
+    function appendMaterialToList(entry) {
+      const li = document.createElement("li");
+      li.innerHTML = `<strong>${entry.material}</strong> from ${entry.name} – ${entry.description} (Drop-off: ${entry.location})`;
+      materialList.appendChild(li);
+    }
+  
+    function saveMaterial(entry) {
+      const materials = JSON.parse(localStorage.getItem("materials")) || [];
+      materials.push(entry);
+      localStorage.setItem("materials", JSON.stringify(materials));
+    }
+  
+    function loadMaterials() {
+      const materials = JSON.parse(localStorage.getItem("materials")) || [];
+      materials.forEach(appendMaterialToList);
+    }
   });
-}
+  
