@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Second Life Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <h1>Second Life Studio</h1>
+    <p>Don't Dump It. Donate It.</p>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h2>Give Your Materials a Second Life</h2>
+      <p>
+        Promote circular design practices and reduce material waste by sharing and reusing leftover materials from studio projects.
+      </p>
+    </section>
+
+    <section class="form-section">
+      <h2>Donate Materials</h2>
+      <form id="donation-form">
+        <div class="form-group">
+          <label for="name">Your Name:</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="material">Material Type:</label>
+          <input type="text" id="material" name="material" required />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" name="description" rows="3" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="location">Drop-off Location:</label>
+          <input type="text" id="location" name="location" required />
+        </div>
+
+        <button type="submit" class="btn-submit">Add Donation</button>
+      </form>
+    </section>
+
+    <section class="search-section">
+      <h2>Search Available Materials</h2>
+      <input type="text" id="search" placeholder="Search by material type..." />
+      <ul id="material-list"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Second Life Studio | <a href="https://forms.gle/yourform" target="_blank">Submit via Google Form</a></p>
+  </footer>
+</body>
+
+</html>
